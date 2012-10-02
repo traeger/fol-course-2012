@@ -1,0 +1,151 @@
+% !TEX TS-program = latex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{beamer} % Standardklasse für Beamer
+\beamertemplatenavigationsymbolsempty % kleinen Navigationsleiste am unteren Rand
+\setbeamertemplate{footline}[frame number] % Seitenzahlen in Fußzeile einfügen
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,ngerman]{babel}
+
+\usepackage{amsfonts}
+\usepackage{mathptmx}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{courier}
+\usepackage[T1]{fontenc}
+
+\usepackage{listings}
+
+%%%%%%%%
+% listings
+%%%%%%%%
+\lstset{ %
+  basicstyle=\tiny
+}
+
+\usepackage{environ}
+
+\newenvironment{page}[1]
+	{\begin{frame}[containsverbatim]{#1}}
+    	{\end{frame}}
+
+\title{Princess}
+\subtitle{Theorem Proving in First-Order Logic modulo Linear Integer Arithmetic}
+
+\begin{document}
+
+\selectlanguage{english}
+\maketitle
+
+\begin{page}{Authors}
+\begin{itemize}
+	\item Philipp Rümmer (main developer) (Department of Information Technology, Uppsala University)
+	\item Angelo Brillout (Eidgenössische Technische Hochschule Zürich)
+\end{itemize}
+
+\end{page}
+%%
+%%
+%%
+\begin{page}{Facts}
+\begin{itemize}
+	\item uses Presburger arithmetic
+	\item can eliminate quantifiers
+	\item handling of (partial and total) functions via an encoding into uninterpreted predicates
+	\item input formates
+	\begin{itemize}
+		\item native format
+		\item SMT-LIB 2 
+		\item FOF/TFF/CNF dialects of TPTP.
+	\end{itemize}
+	\item handling of the theory of arrays via user-specified axioms
+\end{itemize}
+
+\end{page}
+%%
+%%
+%%
+\begin{page}{Native Input Language}
+
+\begin{lstlisting}
+\exists int grandson_years, son_years, my_years,
+            grandson_months, son_weeks, grandson_days; (
+  grandson_days = grandson_months * 4 * 7 &
+  grandson_months = grandson_years * 12 &
+  son_weeks = son_years * 12 * 4 &
+  grandson_days = son_weeks &
+  grandson_months = my_years &
+  grandson_years + son_years + my_years = 140
+)
+\end{lstlisting}
+\begin{lstlisting}
+Formula is valid, satisfying assignment for the existential constants is:
+true
+\end{lstlisting}
+
+\end{page}
+%%
+%%
+%%
+\begin{page}{Native Input Language}
+
+\begin{lstlisting}
+\existentialConstants {
+  int my_years;
+}
+
+\problem {
+  \exists int grandson_years, son_years,
+              grandson_months, son_weeks, grandson_days; (
+    grandson_days = grandson_months * 4 * 7 &
+    grandson_months = grandson_years * 12 &
+    son_weeks = son_years * 12 * 4 &
+    grandson_days = son_weeks &
+    grandson_months = my_years &
+    grandson_years + son_years + my_years = 140
+  )
+}
+\end{lstlisting}
+\begin{lstlisting}
+Formula is valid, satisfying assignment for the existential constants is:
+(my_years + -84 = 0)
+\end{lstlisting}
+
+\end{page}
+%%
+%%
+%%
+\begin{page}{Presburger arithmetic}
+
+\begin{itemize}
+\item $\lnot(0 = x + 1)$
+\item $x + 1 = y + 1 \to x = y$
+\item $x + 0 = x$
+\item $(x + y) + 1 = x + (y + 1)$
+\item $(P(0) \land \forall x(P(x) \to P(x + 1))) \to \forall y P(y).$
+\end{itemize}
+
+\end{page}
+%%
+%%
+%%
+\begin{page}{TPTP Performance}
+
+\begin{itemize}
+	\item TPTP Performance (June 2012)
+	\begin{itemize}
+		\item TFA: Winner, place 1/3
+		\item FOF: place 12/16
+		\item FOF@Turing: place 12/16
+	\end{itemize}
+	\item AUFLIA Benchmarks (November 2011) \\
+		benchmarks on containing arrays, uninterpreted functions, integer arithmetic, and quantifiers \\
+		place 2
+\end{itemize}
+
+\end{page}
+%%
+%%
+%%
+
+\end{document}
