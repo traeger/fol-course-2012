@@ -26,7 +26,7 @@
 \usepackage{environ}
 
 \newenvironment{page}[1]
-	{\begin{frame}[containsverbatim]{#1}}
+	{\begin{frame}[containsverbatim,c]{#1}}
     	{\end{frame}}
 
 \title{Princess}
@@ -42,6 +42,16 @@
 	\item Philipp Rümmer (main developer) (Department of Information Technology, Uppsala University)
 	\item Angelo Brillout (Eidgenössische Technische Hochschule Zürich)
 \end{itemize}
+
+\end{page}
+%%
+%%
+%%
+\begin{page}{Code-Language / License}
+\centering
+written in Scala \\
+
+licensed under GPL v3
 
 \end{page}
 %%
@@ -129,7 +139,7 @@ Formula is valid, satisfying assignment for the existential constants is:
 %%
 %%
 %%
-\begin{page}{TPTP Performance}
+\begin{page}{Performance}
 
 \begin{itemize}
 	\item TPTP Performance (June 2012)
